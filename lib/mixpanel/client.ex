@@ -41,7 +41,7 @@ defmodule Mixpanel.Client do
 
   def handle_cast({:track, event, properties}, %{token: token, active: true} = state) do
     data =
-      %{event: event, properties: Map.put(properties, :token, token)}
+      %{event: event, properties: Map.put_new(properties, :token, token)}
       |> Poison.encode!()
       |> :base64.encode()
 

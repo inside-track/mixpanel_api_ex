@@ -30,6 +30,7 @@ defmodule Mixpanel do
     properties =
       properties
       |> track_put_time(Keyword.get(opts, :time))
+      |> track_put_token(Keyword.get(opts, :token))
       |> track_put_distinct_id(Keyword.get(opts, :distinct_id))
       |> track_put_ip(Keyword.get(opts, :ip))
 
@@ -37,6 +38,11 @@ defmodule Mixpanel do
 
     :ok
   end
+
+  defp track_put_token(properties, nil), do: properties
+
+  defp track_put_token(properties, token) when is_binary(token),
+    do: Map.put(properties, :token, token)
 
   defp track_put_time(properties, nil), do: properties
 
